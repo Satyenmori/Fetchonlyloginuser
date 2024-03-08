@@ -15,15 +15,11 @@ const Home = () => {
   const deleteuser = (id) => {
     let loggedInUsers = JSON.parse(localStorage.getItem("loggedinUsers")) || [];
 
-    const deleteUserid = loggedInUsers.findIndex((user) => user.id === id);
-    if (deleteUserid !== -1) {
-      loggedInUsers.splice(deleteUserid, 1);
-      localStorage.setItem("loggedinUsers", JSON.stringify(loggedInUsers));
-      setUserData(loggedInUsers);
-      alert("User Delete Successfully");
-    } else {
-      alert("User Not Found");
-    }
+    const updatedUser = loggedInUsers.filter((user) => user.id !== id);
+
+    localStorage.setItem("loggedinUsers", JSON.stringify(updatedUser));
+    setUserData(updatedUser);
+    alert("User Delete Successfully");
   };
 
   return (
@@ -40,9 +36,9 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {userData.map((user, index) => (
-            <tr key={index}>
-              <th scope="row">{index + 1}</th>
+          {userData.map((user) => (
+            <tr key={user.id}>
+              <th scope="row">{user.id}</th>
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>{user.password}</td>

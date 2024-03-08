@@ -34,9 +34,14 @@ const SignIn = () => {
       if (singleUser !== -1) {
         loggedInUsers[singleUser].time = new Date().toLocaleString();
       } else {
-        loggedInUsers.push({ ...foundUser, time: new Date().toLocaleString() });
+        //Genrate a unique id
+        const userID = Math.floor(Math.random() * 1000000);
+        loggedInUsers.push({
+          ...foundUser,
+          id: userID,
+          time: new Date().toLocaleString(),
+        });
       }
-      
       localStorage.setItem("loggedinUsers", JSON.stringify(loggedInUsers));
       Navigate("/");
     } else {
