@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+// pass data home component to update form
+const updateUser = (user) => {
+  localStorage.setItem("userToUpdate", JSON.stringify(user));
+};
+
 const Home = () => {
   const [userData, setUserData] = useState([]);
 
@@ -45,7 +50,11 @@ const Home = () => {
               <td>{user.password}</td>
               <td>{user.time}</td>
               <td>
-                <Link to={`update/${user.id}/edit`} className="edit">
+                <Link
+                  className="edit"
+                  to={`update/${user.id}/edit`}
+                  onClick={() => updateUser(user)}
+                >
                   <i className="fa-regular fa-pen-to-square"></i>
                 </Link>
                 <button className="delete" onClick={() => deleteuser(user.id)}>

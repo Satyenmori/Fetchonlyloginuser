@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const UserUpdate = () => {
   const [user, setUser] = useState({
@@ -8,13 +8,20 @@ const UserUpdate = () => {
     time: "",
   });
 
-  const handlInput=(e)=>{
-    
-  }
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("userToUpdate")) || {};
+    setUser(userData);
+  }, []);
 
-  const handleSubmit=(e)=>{
+  const handlInput = (e) => {
+    let { name, value } = e.target;
+
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-  }
+  };
 
   return (
     <>
