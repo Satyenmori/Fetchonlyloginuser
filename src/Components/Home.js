@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [userData, setUserData] = useState([]);
@@ -44,9 +45,9 @@ const Home = () => {
               <td>{user.password}</td>
               <td>{user.time}</td>
               <td>
-                <button className="edit">
+                <Link to={`update/${user.id}/edit`} className="edit">
                   <i className="fa-regular fa-pen-to-square"></i>
-                </button>
+                </Link>
                 <button className="delete" onClick={() => deleteuser(user.id)}>
                   <i className="fa-solid fa-trash fa"></i>
                 </button>
