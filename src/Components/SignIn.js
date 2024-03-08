@@ -26,6 +26,8 @@ const SignIn = () => {
     if (foundUser) {
       alert("login Successfull");
       const loggedInUsers = JSON.parse(localStorage.getItem("loggedinUsers")) || [];
+      // set logged in users Current Time
+      foundUser.time=new Date().toLocaleString();
       loggedInUsers.push(foundUser);
       localStorage.setItem("loggedinUsers", JSON.stringify(loggedInUsers));
       Navigate("/");
