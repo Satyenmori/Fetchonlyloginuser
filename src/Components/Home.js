@@ -4,10 +4,9 @@ const Home = () => {
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
-    const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
-    if (loggedinUser) {
-      setUserData([loggedinUser]);
-    }
+    const loggedinUser = JSON.parse(localStorage.getItem("loggedinUsers")) || [];
+
+    setUserData(loggedinUser);
   }, []);
   return (
     <>

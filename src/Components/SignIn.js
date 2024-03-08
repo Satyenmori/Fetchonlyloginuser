@@ -25,7 +25,9 @@ const SignIn = () => {
     );
     if (foundUser) {
       alert("login Successfull");
-      localStorage.setItem("loggedinUser", JSON.stringify(foundUser));
+      const loggedInUsers = JSON.parse(localStorage.getItem("loggedinUsers")) || [];
+      loggedInUsers.push(foundUser);
+      localStorage.setItem("loggedinUsers", JSON.stringify(loggedInUsers));
       Navigate("/");
     } else {
       alert("Invalid email & Password");
