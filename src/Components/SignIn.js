@@ -25,10 +25,18 @@ const SignIn = () => {
     );
     if (foundUser) {
       alert("login Successfull");
-      const loggedInUsers = JSON.parse(localStorage.getItem("loggedinUsers")) || [];
-      // set logged in users Current Time
-      foundUser.time=new Date().toLocaleString();
-      loggedInUsers.push(foundUser);
+      const loggedInUsers =
+        JSON.parse(localStorage.getItem("loggedinUsers")) || [];
+      //Logged in users only one entry
+      const singleUser = loggedInUsers.findIndex(
+        (loggedInUser) => loggedInUser.email === foundUser.email
+      );
+      if (singleUser !== -1) {
+        loggedInUsers[singleUser].time = new Date().toLocaleString();
+      } else {
+        loggedInUsers.push({ ...foundUser, time: new Date().toLocaleString() });
+      }
+      
       localStorage.setItem("loggedinUsers", JSON.stringify(loggedInUsers));
       Navigate("/");
     } else {
