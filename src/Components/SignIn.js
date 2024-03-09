@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
@@ -7,7 +7,15 @@ const SignIn = () => {
     password: "",
   });
   const Navigate = useNavigate();
+  // Id Genrate Auto incriment logic
+  const [nextId, setNextId] = useState(1);
 
+  useEffect(() => {
+    const storedNextId = localStorage.getItem("nextId");
+    if (storedNextId) {
+      setNextId(+(storedNextId));
+    }
+  }, []);
   const handlInput = (e) => {
     console.log(e);
     let { name, value } = e.target;
@@ -35,14 +43,17 @@ const SignIn = () => {
         loggedInUsers[singleUser].time = new Date().toLocaleString();
       } else {
         //Genrate a unique id
-        const userID = Math.floor(Math.random() * 1000000);
+        const id = nextId.toString();
         loggedInUsers.push({
           ...foundUser,
-          id: userID,
+          id: id,
           time: new Date().toLocaleString(),
         });
+        setNextId(nextId + 1);
+        localStorage.setItem("nextId", nextId + 1);
       }
       localStorage.setItem("loggedinUsers", JSON.stringify(loggedInUsers));
+
       Navigate("/");
     } else {
       alert("Invalid email & Password");
