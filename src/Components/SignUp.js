@@ -6,7 +6,7 @@ const SignUp = () => {
     username: "",
     email: "",
     password: "",
-    time: "",
+    phone: "",
   });
   const Navigate = useNavigate();
 
@@ -17,9 +17,25 @@ const SignUp = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    try {
+      const response = await fetch("http://localhost:5151/auth/signup", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+      if (response.ok) {
+        alert("Registration is Successfuly");
+        const res_data = await response.json();
+        setUser({ username: "", email: "", password: "", phone: "" });
+        Navigate("/login");
+      }else{
+        alert("Email id is Alredy Exist")
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -89,14 +105,14 @@ const SignUp = () => {
                       <i className="fa-solid fa-phone"></i>
                     </span>
                     <input
-                      type="datetime-local"
+                      type="number"
                       className="form-control"
-                      placeholder="Time"
-                      name="time"
-                      id="time"
-                      aria-label="time"
+                      placeholder="Phone"
+                      name="phone"
+                      id="phone"
+                      aria-label="phone"
                       aria-describedby="addon-wrapping"
-                      value={user.time}
+                      value={user.phone}
                       onChange={handlInput}
                     />
                   </div>
