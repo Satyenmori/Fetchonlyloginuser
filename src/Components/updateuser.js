@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const UserUpdate = () => {
@@ -10,11 +10,7 @@ const UserUpdate = () => {
   });
   const Navigate = useNavigate();
 
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("userToUpdate")) || {};
-    setUser(userData);
-  }, []);
-
+  
   const handlInput = (e) => {
     let { name, value } = e.target;
 
@@ -25,15 +21,7 @@ const UserUpdate = () => {
     e.preventDefault();
 
     // User update logic
-    const updatedUsers =
-      JSON.parse(localStorage.getItem("loggedinUsers")) || [];
-    const updatedUserData = updatedUsers.map((u) =>
-      u.id === user.id ? user : u
-    );
-    localStorage.setItem("loggedinUsers", JSON.stringify(updatedUserData));
-    localStorage.removeItem("userToUpdate");
-    alert("User Details updated Successfuly !");
-    Navigate("/");
+    
   };
 
   return (

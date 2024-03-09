@@ -7,15 +7,7 @@ const SignIn = () => {
     password: "",
   });
   const Navigate = useNavigate();
-  // Id Genrate Auto incriment logic
-  const [nextId, setNextId] = useState(1);
 
-  useEffect(() => {
-    const storedNextId = localStorage.getItem("nextId");
-    if (storedNextId) {
-      setNextId(+(storedNextId));
-    }
-  }, []);
   const handlInput = (e) => {
     console.log(e);
     let { name, value } = e.target;
@@ -25,39 +17,6 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const userData = JSON.parse(localStorage.getItem("signupData"));
-    const foundUser = userData.find(
-      (storedUser) =>
-        storedUser.email === user.email && storedUser.password === user.password
-    );
-    if (foundUser) {
-      alert("login Successfull");
-      const loggedInUsers =
-        JSON.parse(localStorage.getItem("loggedinUsers")) || [];
-      //Logged in users only one entry
-      const singleUser = loggedInUsers.findIndex(
-        (loggedInUser) => loggedInUser.email === foundUser.email
-      );
-      if (singleUser !== -1) {
-        loggedInUsers[singleUser].time = new Date().toLocaleString();
-      } else {
-        //Genrate a unique id
-        const id = nextId.toString();
-        loggedInUsers.push({
-          ...foundUser,
-          id: id,
-          time: new Date().toLocaleString(),
-        });
-        setNextId(nextId + 1);
-        localStorage.setItem("nextId", nextId + 1);
-      }
-      localStorage.setItem("loggedinUsers", JSON.stringify(loggedInUsers));
-
-      Navigate("/");
-    } else {
-      alert("Invalid email & Password");
-    }
   };
 
   return (

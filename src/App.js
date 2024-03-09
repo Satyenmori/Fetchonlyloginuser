@@ -4,7 +4,7 @@ import NavBar from "./Components/NavBar";
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import UserUpdate from "./Components/updateuser";
+
 
 function App() {
   return (
@@ -14,8 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<SignIn/>}/>
-          <Route path="/signup" element={<SignUp/>}/>
-          <Route path="/update/:id/edit" element={<UserUpdate/>}/>
+          <Route path="/signup" element={<SignUp/>}/>          
         </Routes>
       </BrowserRouter>
       
