@@ -5,3 +5,8 @@
 .delete {
   background-color: red;
 }
+.username{
+  font-size: 45px;
+  color: red;
+  text-transform: uppercase;
+}
