@@ -1,12 +1,14 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../store/store";
 
 const NavBar = () => {
+  const { user } = useAuth();
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
           <NavLink className="navbar-brand" to="/">
-            Navbar
+            {user ? `${user.username}` : `Navbar`}
           </NavLink>
           <button
             className="navbar-toggler"
@@ -27,10 +29,14 @@ const NavBar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="btn btn-outline-success" to="/signup">SignUp</NavLink>
+                <NavLink className="btn btn-outline-success" to="/signup">
+                  SignUp
+                </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="btn btn-outline-warning" to="/login">SignIn</NavLink>
+                <NavLink className="btn btn-outline-warning" to="/login">
+                  SignIn
+                </NavLink>
               </li>
             </ul>
           </div>
