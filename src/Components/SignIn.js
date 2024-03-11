@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../store/store";
 
 const SignIn = () => {
   const [user, setUser] = useState({
@@ -7,6 +8,7 @@ const SignIn = () => {
     password: "",
   });
   const Navigate = useNavigate();
+  const{storeTokenInLS}=useAuth()
 
   const handlInput = (e) => {
     console.log(e);
@@ -25,6 +27,8 @@ const SignIn = () => {
       });
       if (response.ok) {
         alert("Login Successfuly");
+        const res_data=await response.json();
+        storeTokenInLS(res_data.token)
         Navigate("/");
       }else{
         alert("Wrong Incridible")

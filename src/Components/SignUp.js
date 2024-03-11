@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../store/store";
 
 const SignUp = () => {
   const [user, setUser] = useState({
@@ -9,6 +10,7 @@ const SignUp = () => {
     phone: "",
   });
   const Navigate = useNavigate();
+  const { storeTokenInLS } = useAuth();
 
   const handlInput = (e) => {
     console.log(e);
@@ -28,10 +30,11 @@ const SignUp = () => {
       if (response.ok) {
         alert("Registration is Successfuly");
         const res_data = await response.json();
+        storeTokenInLS(res_data.token);
         setUser({ username: "", email: "", password: "", phone: "" });
         Navigate("/login");
-      }else{
-        alert("Email id is Alredy Exist")
+      } else {
+        alert("Email id is Alredy Exist");
       }
     } catch (error) {
       console.log(error);
