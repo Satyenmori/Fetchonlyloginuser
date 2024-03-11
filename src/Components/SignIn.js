@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
@@ -15,8 +15,23 @@ const SignIn = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5151/auth/signin", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+      if (response.ok) {
+        alert("Login Successfuly");
+        Navigate("/");
+      }else{
+        alert("Wrong Incridible")
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
