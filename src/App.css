@@ -1,3 +1,9 @@
+:root {
+  --primary: #fea116;
+  --light: #f1f8ff;
+  --dark: #0f172b;
+}
+
 .edit {
   background-color: green;
   margin-right: 15px;
@@ -5,8 +11,85 @@
 .delete {
   background-color: red;
 }
-.username{
+.username {
   font-size: 45px;
   color: red;
   text-transform: uppercase;
+}
+
+/* Rooms css */
+
+.text-primary {
+  color: #fea116 !important;
+}
+.text-secondary {
+  color: #6c757d !important;
+}
+
+.text-dark {
+  color: #0f172b !important;
+}
+
+/* Btn css */
+
+.btn {
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.btn.btn-primary,
+.btn.btn-secondary {
+  color: #ffffff;
+}
+
+.btn-square {
+  width: 38px;
+  height: 38px;
+}
+
+.btn-sm-square {
+  width: 32px;
+  height: 32px;
+}
+
+.btn-lg-square {
+  width: 48px;
+  height: 48px;
+}
+
+.btn-square,
+.btn-sm-square,
+.btn-lg-square {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: normal;
+  border-radius: 2px;
+}
+
+.btn-primary {
+  color: #000;
+  background-color: #fea116;
+  border-color: #fea116;
+}
+.btn-primary:hover {
+  color: #000;
+  background-color: #feaf39;
+  border-color: #feaa2d;
+}
+.btn-check:focus + .btn-primary,
+.btn-primary:focus {
+  color: #000;
+  background-color: #feaf39;
+  border-color: #feaa2d;
+  box-shadow: 0 0 0 0.25rem rgba(216, 137, 19, 0.5);
+}
+
+.bg-primary {
+  background-color: #fea116 !important;
+}
+.bg-secondary {
+  background-color: #6c757d !important;
 }
