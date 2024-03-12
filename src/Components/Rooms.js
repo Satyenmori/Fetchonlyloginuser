@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 const Rooms=()=>{
+    
     return(
         <>
         <div class="container-xxl py-5">
