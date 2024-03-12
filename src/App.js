@@ -1,4 +1,5 @@
 import "./App.css";
+import Adminroomadd from "./Components/AdminRoomadd";
 import Booking from "./Components/Booking";
 import Home from "./Components/Home";
 import NavBar from "./Components/NavBar";
@@ -18,6 +19,8 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/booking" element={<Booking />} />
+          <Route path="/roomadd" element={<Adminroomadd />} />
+          
         </Routes>
       </BrowserRouter>
     </>
