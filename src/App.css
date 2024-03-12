@@ -93,3 +93,8 @@
 .bg-secondary {
   background-color: #6c757d !important;
 }
+
+.room-image{
+  height: 300px;
+  width: 100%;
+}

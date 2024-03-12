@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Adminroomadd = () => {
   const [room, setRoom] = useState({
@@ -11,7 +12,7 @@ const Adminroomadd = () => {
     wifi: "",
     images: "",
   });
-
+  const Navigate = useNavigate();
   const handlInput = (e) => {
     let { name, value } = e.target;
 
@@ -39,6 +40,7 @@ const Adminroomadd = () => {
           wifi: "",
           images: "",
         });
+        Navigate("/rooms");
       }
     } catch (error) {
       console.log(error);
@@ -62,6 +64,7 @@ const Adminroomadd = () => {
                       value={room.title}
                       onChange={handlInput}
                       placeholder="Room title"
+                      required
                     />
                     <label for="title">Room Title</label>
                   </div>
@@ -75,6 +78,7 @@ const Adminroomadd = () => {
                       name="description"
                       value={room.description}
                       onChange={handlInput}
+                      required
                     ></textarea>
                     <label for="description">Room Description</label>
                   </div>
@@ -89,6 +93,7 @@ const Adminroomadd = () => {
                       value={room.price}
                       onChange={handlInput}
                       placeholder="Price"
+                      required
                     />
                     <label for="price">Price</label>
                   </div>
@@ -103,6 +108,7 @@ const Adminroomadd = () => {
                       value={room.rating}
                       onChange={handlInput}
                       placeholder="Enter Rating"
+                      required
                     />
                     <label for="rating">Rating</label>
                   </div>
@@ -117,6 +123,7 @@ const Adminroomadd = () => {
                       value={room.bed}
                       onChange={handlInput}
                       placeholder="Enter Bed"
+                      required
                     />
                     <label for="bed">Bed</label>
                   </div>
@@ -131,6 +138,7 @@ const Adminroomadd = () => {
                       value={room.bath}
                       onChange={handlInput}
                       placeholder="Enter Bed"
+                      required
                     />
                     <label for="bath">Bath</label>
                   </div>
@@ -145,6 +153,7 @@ const Adminroomadd = () => {
                       value={room.wifi}
                       onChange={handlInput}
                       placeholder="Enter Wifi"
+                      required
                     />
                     <label for="wifi">Wifi</label>
                   </div>
@@ -159,6 +168,7 @@ const Adminroomadd = () => {
                       value={room.images}
                       onChange={handlInput}
                       placeholder="Enter image"
+                      required
                     />
                     <label for="images">Image</label>
                   </div>
