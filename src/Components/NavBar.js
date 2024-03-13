@@ -3,11 +3,12 @@ import { useAuth } from "../store/store";
 
 const NavBar = () => {
   const { user } = useAuth();
+  const { isAdmin } = useAuth();
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
-          <NavLink className="navbar-brand" to="/">
+          <NavLink className="navbar-brand text-capitalize" to="/">
             {user ? `${user.username}` : `Navbar`}
           </NavLink>
           <button
@@ -23,13 +24,28 @@ const NavBar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-4">
+              {isAdmin && (
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link active fw-bold text-danger"
+                    aria-current="page"
+                    to="/admin/rooms"
+                  >
+                    Admin
+                  </NavLink>
+                </li>
+              )}
               <li className="nav-item">
                 <NavLink className="nav-link active" aria-current="page" to="/">
                   Home
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link active" aria-current="page" to="/rooms">
+                <NavLink
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/rooms"
+                >
                   Rooms
                 </NavLink>
               </li>

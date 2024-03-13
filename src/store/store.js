@@ -31,13 +31,15 @@ export const AuthProvider = ({ children }) => {
       console.log(error);
     }
   };
-  
+
+  const isAdmin = user.role === "admin";
+
   useEffect(() => {
     fetchData();
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ storeTokenInLS, user,token }}>
+    <AuthContext.Provider value={{ storeTokenInLS, user, token,isAdmin }}>
       {children}
     </AuthContext.Provider>
   );
