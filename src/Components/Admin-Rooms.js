@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Rooms = () => {
+const AdminRooms = () => {
   const [rooms, setRoom] = useState([]);
 
   const fetchRooms = async () => {
@@ -27,6 +27,14 @@ const Rooms = () => {
               Explore Our{" "}
               <span className="text-primary text-uppercase">Rooms</span>
             </h1>
+            <div className="col-md-2">
+              <Link
+                className="btn btn-sm btn-success rounded py-2 px-4 mb-2"
+                to="/roomadd"
+              >
+                Add New Room
+              </Link>
+            </div>
           </div>
           <div className="row g-4">
             {rooms.map((room) => (
@@ -37,11 +45,7 @@ const Rooms = () => {
               >
                 <div className="room-item shadow rounded overflow-hidden">
                   <div className="position-relative">
-                    <img
-                      className="img-fluid room-image"
-                      src={room.images}
-                      alt="img 1"
-                    />
+                    <img className="img-fluid room-image" src={room.images} alt="img 1" />
                     <small className="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">
                       $ {room.price} / Per Night
                     </small>
@@ -72,12 +76,24 @@ const Rooms = () => {
                       </small>
                     </div>
                     <p className="text-body mb-3">{room.description}</p>
-                    <div className="d-flex justify-content-end">
+                    <div className="d-flex justify-content-between">
                       <Link
-                        class="btn btn-sm btn-dark rounded py-2 px-4"
+                        className="btn btn-sm btn-success rounded py-2 px-4"
+                        href="#"
+                      >
+                        Edit
+                      </Link>
+                      <Link
+                        className="btn btn-sm btn-dark rounded py-2 px-4"
                         to="/booking"
                       >
                         Book Now
+                      </Link>
+                      <Link
+                        className="btn btn-sm btn-danger rounded py-2 px-4"
+                        to="/booking"
+                      >
+                        Delete
                       </Link>
                     </div>
                   </div>
@@ -91,4 +107,4 @@ const Rooms = () => {
   );
 };
 
-export default Rooms;
+export default AdminRooms;

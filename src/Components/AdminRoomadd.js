@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../store/store";
 
 const Adminroomadd = () => {
   const [room, setRoom] = useState({
@@ -13,6 +14,7 @@ const Adminroomadd = () => {
     images: "",
   });
   const Navigate = useNavigate();
+  const { token } = useAuth();
   const handlInput = (e) => {
     let { name, value } = e.target;
 
@@ -22,9 +24,12 @@ const Adminroomadd = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5151/room/addroom", {
+      const response = await fetch("http://localhost:5151/admin/addroom", {
         method: "post",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(room),
       });
       if (response.ok) {
@@ -41,6 +46,8 @@ const Adminroomadd = () => {
           images: "",
         });
         Navigate("/rooms");
+      } else {
+        alert("Accsess Denied ! This is Not Admin");
       }
     } catch (error) {
       console.log(error);
