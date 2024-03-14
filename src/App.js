@@ -30,7 +30,7 @@ function App() {
               </AdminProtected>
             }
           />
-          <Route path="/admin/rooms" element={<AdminProtected><AdminRooms /></AdminProtected>} />
+          <Route path="/admin/rooms" element={<AdminRooms />} />          
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

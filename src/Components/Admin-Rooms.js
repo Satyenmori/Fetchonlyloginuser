@@ -9,6 +9,7 @@ const AdminRooms = () => {
       const response = await fetch("http://localhost:5151/room/");
       const data = await response.json();
       setRoom(data);
+      console.log(rooms);
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +46,7 @@ const AdminRooms = () => {
               >
                 <div className="room-item shadow rounded overflow-hidden">
                   <div className="position-relative">
-                    <img className="img-fluid room-image" src={room.images} alt="img 1" />
+                    <img className="img-fluid room-image" src={`http://localhost:5151/${room.images}`} alt="img 1" />
                     <small className="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">
                       $ {room.price} / Per Night
                     </small>

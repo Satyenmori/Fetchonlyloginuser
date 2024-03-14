@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../store/store";
+//import { useAuth } from "../store/store";
+import axios from "axios";
 
 const Adminroomadd = () => {
   const [room, setRoom] = useState({
@@ -13,42 +14,60 @@ const Adminroomadd = () => {
     wifi: "",
     images: "",
   });
+  const [imge, setImge] = useState({});
+
+  const handleImage = (e) => {
+    let file = e.target.files[0];
+    setImge(file);
+  };
+
   const Navigate = useNavigate();
-  const { token } = useAuth();
+  // const { token } = useAuth();
   const handlInput = (e) => {
-    let { name, value } = e.target;
+    let { name, value, file } = e.target;
+
+    if (name === "images") {
+      value = file;
+    }
 
     setRoom({ ...room, [name]: value });
   };
 
   const handleSubmit = async (e) => {
+    debugger;
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5151/admin/addroom", {
-        method: "post",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(room),
+      const formData = new FormData();
+      formData.append("title", room.title);
+      formData.append("description", room.description);
+      formData.append("price", room.price);
+      formData.append("rating", room.rating);
+      formData.append("bed", room.bed);
+      formData.append("bath", room.bath);
+      formData.append("wifi", room.wifi);
+      formData.append("images", imge);      
+      const response = await axios.post(
+        "http://localhost:5151/admin/addroom",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      alert("New Room Is Add Successfuly");
+      setRoom({
+        title: "",
+        description: "",
+        price: "",
+        rating: "",
+        bed: "",
+        bath: "",
+        wifi: "",
+        images: "",
       });
-      if (response.ok) {
-        alert("New Room Is Add Successfuly");
-        const res_data = await response.json();
-        setRoom({
-          title: "",
-          description: "",
-          price: "",
-          rating: "",
-          bed: "",
-          bath: "",
-          wifi: "",
-          images: "",
-        });
-        Navigate("/rooms");
-      } else {
-        alert("Accsess Denied ! This is Not Admin");
-      }
+      Navigate("/rooms");
     } catch (error) {
       console.log(error);
     }
@@ -59,7 +78,7 @@ const Adminroomadd = () => {
       <div className="row justify-content-center align-items-center h-100">
         <div className="col-lg-6">
           <div className="wow fadeInUp" data-wow-delay="0.2s">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="row g-3">
                 <div className="col-md-12">
                   <div className="form-floating">
@@ -168,13 +187,11 @@ const Adminroomadd = () => {
                 <div className="col-md-12">
                   <div className="form-floating">
                     <input
-                      type="string"
+                      type="file"
                       className="form-control"
                       id="images"
                       name="images"
-                      value={room.images}
-                      onChange={handlInput}
-                      placeholder="Enter image"
+                      onChange={(e) => handleImage(e)}
                       required
                     />
                     <label for="images">Image</label>
