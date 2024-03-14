@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import { useAuth } from "../store/store";
+import { useAuth } from "../store/store";
 import axios from "axios";
 
 const Adminroomadd = () => {
@@ -22,7 +22,7 @@ const Adminroomadd = () => {
   };
 
   const Navigate = useNavigate();
-  // const { token } = useAuth();
+  const { token } = useAuth();
   const handlInput = (e) => {
     let { name, value, file } = e.target;
 
@@ -45,12 +45,13 @@ const Adminroomadd = () => {
       formData.append("bed", room.bed);
       formData.append("bath", room.bath);
       formData.append("wifi", room.wifi);
-      formData.append("images", imge);      
+      formData.append("images", imge);
       const response = await axios.post(
         "http://localhost:5151/admin/addroom",
         formData,
         {
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }
