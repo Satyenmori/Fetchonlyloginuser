@@ -46,7 +46,7 @@ const AdminRooms = () => {
               >
                 <div className="room-item shadow rounded overflow-hidden">
                   <div className="position-relative">
-                    <img className="img-fluid room-image" src={`http://localhost:5151/${room.images}`} alt="img 1" />
+                    <img className="img-fluid room-image" src={`http://localhost:5151/${room.images[0]}`} alt="img 1" />
                     <small className="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">
                       $ {room.price} / Per Night
                     </small>
@@ -85,10 +85,10 @@ const AdminRooms = () => {
                         Edit
                       </Link>
                       <Link
-                        className="btn btn-sm btn-dark rounded py-2 px-4"
+                        className="btn btn-sm btn-primary rounded py-2 px-4"
                         to="/booking"
                       >
-                        Book Now
+                        View Detail
                       </Link>
                       <Link
                         className="btn btn-sm btn-danger rounded py-2 px-4"

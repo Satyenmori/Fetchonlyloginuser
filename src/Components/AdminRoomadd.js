@@ -12,13 +12,16 @@ const Adminroomadd = () => {
     bed: "",
     bath: "",
     wifi: "",
-    images: "",
+    images: [],
   });
-  const [imge, setImge] = useState({});
+  const [imge, setImge] = useState([]);
 
   const handleImage = (e) => {
-    let file = e.target.files[0];
-    setImge(file);
+    let dup=[...imge]
+    let files = e.target.files[0];
+    dup.push(files)
+    console.log(dup);
+    setImge(dup);
   };
 
   const Navigate = useNavigate();
@@ -45,7 +48,10 @@ const Adminroomadd = () => {
       formData.append("bed", room.bed);
       formData.append("bath", room.bath);
       formData.append("wifi", room.wifi);
-      formData.append("images", imge);
+      for(let x of imge){
+
+        formData.append("images", x);
+      }
       const response = await axios.post(
         "http://localhost:5151/admin/addroom",
         formData,
@@ -193,12 +199,51 @@ const Adminroomadd = () => {
                       id="images"
                       name="images"
                       onChange={(e) => handleImage(e)}
+                      multiple
                       required
                     />
-                    <label for="images">Image</label>
+                    <label for="images">images</label>
                   </div>
                 </div>
-
+                {/* <div className="col-md-12">
+                  <div className="form-floating">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="image1"
+                      name="image1"
+                      onChange={(e) => handleImage(e)}
+                      required
+                    />
+                    <label for="image1">Image1</label>
+                  </div>
+                </div>
+                <div className="col-md-12">
+                  <div className="form-floating">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="image2"
+                      name="image2"
+                      onChange={(e) => handleImage(e)}
+                      required
+                    />
+                    <label for="image2">Image2</label>
+                  </div>
+                </div>
+                <div className="col-md-12">
+                  <div className="form-floating">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="image3"
+                      name="image3"
+                      onChange={(e) => handleImage(e)}
+                      required
+                    />
+                    <label for="image3">Image3</label>
+                  </div>
+                </div> */}
                 <div className="col-12">
                   <button className="btn btn-primary w-100  py-3" type="submit">
                     Add Room

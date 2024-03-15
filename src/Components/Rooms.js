@@ -39,8 +39,8 @@ const Rooms = () => {
                   <div className="position-relative">
                     <img
                       className="img-fluid room-image"
-                      src={`http://localhost:5151/${room.images}`}
-                      alt="img 1"
+                      src={`http://localhost:5151/${room.images[0]}`}
+                      alt="thumbnail"
                     />
                     <small className="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">
                       $ {room.price} / Per Night
@@ -74,10 +74,10 @@ const Rooms = () => {
                     <p className="text-body mb-3">{room.description}</p>
                     <div className="d-flex justify-content-end">
                       <Link
-                        class="btn btn-sm btn-dark rounded py-2 px-4"
+                        class="btn btn-sm btn-primary rounded py-2 px-4"
                         to="/booking"
                       >
-                        Book Now
+                        View Detil
                       </Link>
                     </div>
                   </div>
