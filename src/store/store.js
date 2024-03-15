@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState("");
+  const [rooms, setRoom] = useState([]);
 
   // Jwt token StoreIn LocalStore
   const storeTokenInLS = (serverToken) => {
@@ -38,8 +39,26 @@ export const AuthProvider = ({ children }) => {
     fetchData();
   }, [token]);
 
+  // get All Room Data
+
+  const fetchRooms = async () => {
+    try {
+      const response = await fetch("http://localhost:5151/room/");
+      const data = await response.json();
+      setRoom(data);
+      console.log(rooms);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchRooms();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ storeTokenInLS, user, token,isAdmin }}>
+    <AuthContext.Provider
+      value={{ storeTokenInLS, user, token, isAdmin, rooms }}
+    >
       {children}
     </AuthContext.Provider>
   );

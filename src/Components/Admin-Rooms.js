@@ -1,22 +1,8 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../store/store";
 
 const AdminRooms = () => {
-  const [rooms, setRoom] = useState([]);
-
-  const fetchRooms = async () => {
-    try {
-      const response = await fetch("http://localhost:5151/room/");
-      const data = await response.json();
-      setRoom(data);
-      console.log(rooms);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    fetchRooms();
-  }, []);
+  const { rooms } = useAuth();
 
   return (
     <>
@@ -46,7 +32,11 @@ const AdminRooms = () => {
               >
                 <div className="room-item shadow rounded overflow-hidden">
                   <div className="position-relative">
-                    <img className="img-fluid room-image" src={`http://localhost:5151/${room.images[0]}`} alt="img 1" />
+                    <img
+                      className="img-fluid room-image"
+                      src={`http://localhost:5151/${room.images[2]}`}
+                      alt="img 1"
+                    />
                     <small className="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">
                       $ {room.price} / Per Night
                     </small>
@@ -86,13 +76,13 @@ const AdminRooms = () => {
                       </Link>
                       <Link
                         className="btn btn-sm btn-primary rounded py-2 px-4"
-                        to="/booking"
+                        to={`/booking/${room._id}`}
                       >
                         View Detail
                       </Link>
                       <Link
                         className="btn btn-sm btn-danger rounded py-2 px-4"
-                        to="/booking"
+                        to="#"
                       >
                         Delete
                       </Link>
