@@ -2,6 +2,7 @@ import "./App.css";
 import PageNotFound from "./Components/404";
 import AdminProtected from "./Components/Admin-Protected";
 import AdminRooms from "./Components/Admin-Rooms";
+import RoomEditform from "./Components/AdminRoom-editform";
 import Adminroomadd from "./Components/AdminRoomadd";
 import Booking from "./Components/Booking";
 import Home from "./Components/Home";
@@ -35,6 +36,14 @@ function App() {
             element={
               <AdminProtected>
                 <AdminRooms />
+              </AdminProtected>
+            }
+          />
+           <Route
+            path="/admin/room-form/edit/:id"
+            element={
+              <AdminProtected>
+                <RoomEditform />
               </AdminProtected>
             }
           />

@@ -34,7 +34,7 @@ const AdminRooms = () => {
                   <div className="position-relative">
                     <img
                       className="img-fluid room-image"
-                      src={`http://localhost:5151/${room.images[2]}`}
+                      src={`http://localhost:5151/${room.images[0]}`}
                       alt="img 1"
                     />
                     <small className="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">
@@ -70,7 +70,7 @@ const AdminRooms = () => {
                     <div className="d-flex justify-content-between">
                       <Link
                         className="btn btn-sm btn-success rounded py-2 px-4"
-                        href="#"
+                        to={`/admin/room-form/edit/${room._id}`}
                       >
                         Edit
                       </Link>
