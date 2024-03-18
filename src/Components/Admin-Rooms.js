@@ -1,9 +1,32 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../store/store";
+import { useEffect } from "react";
 
 const AdminRooms = () => {
   const { rooms } = useAuth();
+  const { fetchRooms } = useAuth();
 
+  // Delete Rooms
+
+  const deleterooms = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5151/admin/roomdelete/${id}`,
+        {
+          method: "delete",
+        }
+      );
+      if (response.ok) {
+        alert("Room Delete SuccessFuly");
+        fetchRooms();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchRooms();
+  }, []);
   return (
     <>
       <div classNameName="container-xxl py-5">
@@ -83,6 +106,7 @@ const AdminRooms = () => {
                       <Link
                         className="btn btn-sm btn-danger rounded py-2 px-4"
                         to="#"
+                        onClick={() => deleterooms(room._id)}
                       >
                         Delete
                       </Link>
