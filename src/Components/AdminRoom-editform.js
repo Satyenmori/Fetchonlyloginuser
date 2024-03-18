@@ -19,6 +19,7 @@ const RoomEditform = () => {
     fetchRoomsById();
   }, [id]);
 
+  const deletephotos = () => {};
   return (
     <>
       <div className="container-fluid py-5 h-75">
@@ -124,6 +125,29 @@ const RoomEditform = () => {
                       <label for="wifi">Wifi</label>
                     </div>
                   </div>
+
+                  {/* Images..................... */}
+                  <div className="col-md-12 d-flex flex-wrap">
+                    <div className="row g-3">
+                      {room.images &&
+                        room.images.map((image, index) => (
+                          <div key={index} className="col-4 text-center">
+                            <img
+                              className="img-fluid rounded w-100 wow zoomIn"
+                              data-wow-delay="0.1s"
+                              src={`http://localhost:5151/${image}`}
+                              alt={`Image ${index + 1}`}
+                            />
+                            <button
+                              className="delete mt-1"
+                              onClick={() => deletephotos(room._id)}
+                            >
+                              <i className="fa-solid fa-trash fa"></i>
+                            </button>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
                   <div className="col-md-12">
                     <div className="form-floating">
                       <input
@@ -131,59 +155,22 @@ const RoomEditform = () => {
                         className="form-control"
                         id="images"
                         name="images"
-                        // value={
-                        //   room.images && room.images.length > 0
-                        //     ? `http://localhost:5151/${room.images[0]}`
-                        //     : ``
-                        // }
                         multiple
-                        required
                       />
                       <label for="images">images</label>
                     </div>
                   </div>
-                  <div className="col-md-12">
-                    <div className="form-floating">
-                      <input
-                        type="file"
-                        className="form-control"
-                        id="image1"
-                        name="image1"
-                        required
-                      />
-                      <label for="image1">Image1</label>
-                    </div>
-                  </div>
-                  <div className="col-md-12">
-                    <div className="form-floating">
-                      <input
-                        type="file"
-                        className="form-control"
-                        id="image2"
-                        name="image2"
-                        required
-                      />
-                      <label for="image2">Image2</label>
-                    </div>
-                  </div>
-                  <div className="col-md-12">
-                    <div className="form-floating">
-                      <input
-                        type="file"
-                        className="form-control"
-                        id="image3"
-                        name="image3"
-                        required
-                      />
-                      <label for="image3">Image3</label>
-                    </div>
-                  </div>
-                  <div className="col-12">
+                  <div className="col-6 mt-5">
                     <button
                       className="btn btn-primary w-100  py-3"
                       type="submit"
                     >
                       Edit Room
+                    </button>
+                  </div>
+                  <div className="col-6 mt-5">
+                    <button className="btn btn-danger w-100  py-3" type="Delete">
+                      Delete Room
                     </button>
                   </div>
                 </div>
