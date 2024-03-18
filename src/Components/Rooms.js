@@ -75,7 +75,7 @@ const Rooms = () => {
                     <div className="d-flex justify-content-end">
                       <Link
                         class="btn btn-sm btn-primary rounded py-2 px-4"
-                        to="/booking"
+                        to={`/booking/${room._id}`}
                       >
                         View Detil
                       </Link>
