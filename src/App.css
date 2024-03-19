@@ -94,8 +94,13 @@
   background-color: #6c757d !important;
 }
 
-.room-image{
+.room-image {
   height: 300px;
   width: 100%;
 }
 
+/* selected room design room add page */
+.roomadd-images {
+  display: flex;
+  flex-wrap: wrap;
+}

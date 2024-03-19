@@ -14,18 +14,21 @@ const Adminroomadd = () => {
     wifi: "",
     images: [],
   });
-  const [imge, setImge] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
+  const Navigate = useNavigate();
+  const { token } = useAuth();
 
   const handleImage = (e) => {
     const files = e.target.files;
     const selectedImagesArray = Array.from(files);
-    setImge(prevState => [...prevState, ...selectedImagesArray]); 
-    setSelectedImages(prevState => [...prevState, ...selectedImagesArray]);
+    setSelectedImages((prevImages) => [...prevImages, ...selectedImagesArray]);
   };
 
-  const Navigate = useNavigate();
-  const { token } = useAuth();
+  // Images Delete Logic
+  const handleDeleteImage = (index) => {
+    setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+
   const handlInput = (e) => {
     let { name, value, file } = e.target;
 
@@ -48,7 +51,7 @@ const Adminroomadd = () => {
       formData.append("bed", room.bed);
       formData.append("bath", room.bath);
       formData.append("wifi", room.wifi);
-      for (let x of imge) {
+      for (let x of selectedImages) {
         formData.append("images", x);
       }
       const response = await axios.post(
@@ -206,14 +209,27 @@ const Adminroomadd = () => {
                   </div>
                 </div>
                 {/* Display selected images */}
-                <div className="col-md-12">
+                <div className="col-md-12 roomadd-images">
                   {selectedImages.map((image, index) => (
-                    <img
-                      key={index}
-                      src={URL.createObjectURL(image)}
-                      alt={`Selected Image ${index}`}
-                      style={{ width: "200px", height: "auto", margin: "5px" }}
-                    />
+                    <div key={index} className="position-relative">
+                      <img
+                        key={index}
+                        src={URL.createObjectURL(image)}
+                        alt={`Selected Image ${index}`}
+                        style={{
+                          width: "220px",
+                          height: "110px",
+                          margin: "5px",
+                        }}
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-danger btn-sm position-absolute  end-0"
+                        onClick={() => handleDeleteImage(index)}
+                      >
+                        <i className="fa-solid fa-trash fa"></i>
+                      </button>
+                    </div>
                   ))}
                 </div>
                 <div className="col-12">
