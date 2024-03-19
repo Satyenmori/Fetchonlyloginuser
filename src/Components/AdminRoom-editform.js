@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 const RoomEditform = () => {
   const { id } = useParams();
   const [room, setRoom] = useState({});
-  const Nevigate=useNavigate()
+  const [image, setImge] = useState([]);
+  const Nevigate = useNavigate();
 
   // fetch Room dataById
   const fetchRoomsById = async () => {
@@ -22,8 +23,20 @@ const RoomEditform = () => {
 
   // edit logic
 
+  const handleImage = (e) => {
+    let dup = [...image];
+    let files = e.target.files[0];
+    dup.push(files);
+    console.log(dup);
+    setImge(dup);
+  };
   const handleInput = (e) => {
-    const { name, value } = e.target;
+    const { name, value, file } = e.target;
+
+    if (name === "images") {
+      value = file;
+    }
+
     setRoom({ ...room, [name]: value });
   };
 
@@ -38,19 +51,22 @@ const RoomEditform = () => {
       formData.append("bed", room.bed);
       formData.append("bath", room.bath);
       formData.append("wifi", room.wifi);
-      room.images.forEach((image) => {
-        formData.append("images", image);
-      });
+      for (let x of image) {
+        formData.append("images", x);
+      }
       const response = await fetch(
         `http://localhost:5151/admin/editroom/${id}`,
         {
           method: "PUT",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
           body: formData,
         }
       );
       if (response.ok) {
         alert("Room update Successfuly");
-        Nevigate("/rooms")
+        Nevigate("/rooms");
       } else {
         console.log("Room Update Faild");
       }
@@ -198,7 +214,7 @@ const RoomEditform = () => {
                         className="form-control"
                         id="images"
                         name="images"
-                        //onChange={handleInput}
+                        onChange={handleImage}
                         multiple
                       />
                       <label for="images">images</label>
