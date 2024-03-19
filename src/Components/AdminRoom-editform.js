@@ -5,6 +5,7 @@ const RoomEditform = () => {
   const { id } = useParams();
   const [room, setRoom] = useState({});
   const [image, setImge] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
   const Nevigate = useNavigate();
 
   // fetch Room dataById
@@ -24,11 +25,13 @@ const RoomEditform = () => {
   // edit logic
 
   const handleImage = (e) => {
-    let dup = [...image];
-    let files = e.target.files[0];
-    dup.push(files);
-    console.log(dup);
-    setImge(dup);
+    const files = e.target.files;
+    const selectedImagesArray = Array.from(files);
+    setSelectedImages((prevImages) => [...prevImages, ...selectedImagesArray]);
+  };
+  // Images Delete Logic
+  const handleDeleteImage = (index) => {
+    setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
   const handleInput = (e) => {
     const { name, value, file } = e.target;
@@ -51,7 +54,7 @@ const RoomEditform = () => {
       formData.append("bed", room.bed);
       formData.append("bath", room.bath);
       formData.append("wifi", room.wifi);
-      for (let x of image) {
+      for (let x of selectedImages) {
         formData.append("images", x);
       }
       const response = await fetch(
@@ -197,9 +200,9 @@ const RoomEditform = () => {
                               src={`http://localhost:5151/${image}`}
                               alt={`Image ${index + 1}`}
                             />
-                            {/* <button className="delete mt-1">
+                            <button className="delete mt-1">
                               <i className="fa-solid fa-trash fa"></i>
-                            </button> */}
+                            </button>
                           </div>
                         ))}
                     </div>
@@ -217,6 +220,30 @@ const RoomEditform = () => {
                       <label for="images">images</label>
                     </div>
                   </div>
+                  {/* Display selected images */}
+                <div className="col-md-12 d-flex flex-wrap">
+                  {selectedImages.map((image, index) => (
+                    <div key={index} className="position-relative">
+                      <img
+                        key={index}
+                        src={URL.createObjectURL(image)}
+                        alt={`Selected Image ${index}`}
+                        style={{
+                          width: "220px",
+                          height: "110px",
+                          margin: "5px",
+                        }}
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-danger btn-sm position-absolute  end-0"
+                        onClick={() => handleDeleteImage(index)}
+                      >
+                        <i className="fa-solid fa-trash fa"></i>
+                      </button>
+                    </div>
+                  ))}
+                </div>
                   <div className="col-12 mt-5">
                     <button
                       className="btn btn-primary w-100  py-3"

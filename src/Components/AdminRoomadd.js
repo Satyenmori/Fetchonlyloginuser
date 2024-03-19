@@ -209,7 +209,7 @@ const Adminroomadd = () => {
                   </div>
                 </div>
                 {/* Display selected images */}
-                <div className="col-md-12 roomadd-images">
+                <div className="col-md-12 d-flex flex-wrap">
                   {selectedImages.map((image, index) => (
                     <div key={index} className="position-relative">
                       <img
