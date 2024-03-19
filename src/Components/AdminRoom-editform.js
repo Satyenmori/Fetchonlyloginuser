@@ -58,9 +58,6 @@ const RoomEditform = () => {
         `http://localhost:5151/admin/editroom/${id}`,
         {
           method: "PUT",
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
           body: formData,
         }
       );
