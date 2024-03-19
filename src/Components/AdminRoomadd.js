@@ -15,13 +15,13 @@ const Adminroomadd = () => {
     images: [],
   });
   const [imge, setImge] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
 
   const handleImage = (e) => {
-    let dup = [...imge];
-    let files = e.target.files[0];
-    dup.push(files);
-    console.log(dup);
-    setImge(dup);
+    const files = e.target.files;
+    const selectedImagesArray = Array.from(files);
+    setImge(prevState => [...prevState, ...selectedImagesArray]); 
+    setSelectedImages(selectedImagesArray);
   };
 
   const Navigate = useNavigate();
@@ -73,6 +73,7 @@ const Adminroomadd = () => {
         wifi: "",
         images: "",
       });
+      setSelectedImages([]);
       Navigate("/rooms");
     } catch (error) {
       console.log(error);
@@ -204,7 +205,17 @@ const Adminroomadd = () => {
                     <label for="images">images</label>
                   </div>
                 </div>
-
+                {/* Display selected images */}
+                <div className="col-md-12">
+                  {selectedImages.map((image, index) => (
+                    <img
+                      key={index}
+                      src={URL.createObjectURL(image)}
+                      alt={`Selected Image ${index}`}
+                      style={{ width: "200px", height: "auto", margin: "5px" }}
+                    />
+                  ))}
+                </div>
                 <div className="col-12">
                   <button className="btn btn-primary w-100  py-3" type="submit">
                     Add Room
