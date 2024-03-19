@@ -197,9 +197,9 @@ const RoomEditform = () => {
                               src={`http://localhost:5151/${image}`}
                               alt={`Image ${index + 1}`}
                             />
-                            <button className="delete mt-1">
+                            {/* <button className="delete mt-1">
                               <i className="fa-solid fa-trash fa"></i>
-                            </button>
+                            </button> */}
                           </div>
                         ))}
                     </div>

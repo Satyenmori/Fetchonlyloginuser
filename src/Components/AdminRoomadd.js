@@ -21,7 +21,7 @@ const Adminroomadd = () => {
     const files = e.target.files;
     const selectedImagesArray = Array.from(files);
     setImge(prevState => [...prevState, ...selectedImagesArray]); 
-    setSelectedImages(selectedImagesArray);
+    setSelectedImages(prevState => [...prevState, ...selectedImagesArray]);
   };
 
   const Navigate = useNavigate();
