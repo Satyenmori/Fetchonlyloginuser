@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 const RoomEditform = () => {
   const { id } = useParams();
   const [room, setRoom] = useState({});
-  const [image, setImge] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const Nevigate = useNavigate();
 
@@ -20,7 +19,7 @@ const RoomEditform = () => {
   };
   useEffect(() => {
     fetchRoomsById();
-  }, [id]);
+  }, []);
 
   // edit logic
 
@@ -32,6 +31,25 @@ const RoomEditform = () => {
   // Images Delete Logic
   const handleDeleteImage = (index) => {
     setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+  // DB Images delete Logic
+  const handleDeleteImageDB = async (indexx) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5151/admin/deleteimage/${id}/${indexx}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        fetchRoomsById();
+        alert("Image deleted successfully");
+      } else {
+        console.log("Failed to delete image from the server");
+      }
+    } catch (error) {
+      console.error("Error deleting image from the server", error);
+    }
   };
   const handleInput = (e) => {
     const { name, value, file } = e.target;
@@ -192,18 +210,18 @@ const RoomEditform = () => {
                   <div className="col-md-12 d-flex flex-wrap">
                     <div className="row g-3">
                       {room.images &&
-                        room.images.map((image, index) => (
-                          <div key={index} className="col-4 text-center">
+                        room.images.map((image, indexx) => (
+                          <div key={indexx} className="col-4 text-center">
                             <img
-                              className="img-fluid rounded w-100 wow zoomIn"
+                              className="img-fluid rounded w-100 h-75 wow zoomIn"
                               data-wow-delay="0.1s"
                               src={`http://localhost:5151/${image}`}
-                              alt={`Image ${index + 1}`}
+                              alt={`Image ${indexx + 1}`}
                             />
                             <button
-                            type="button"
+                              type="button"
                               className="delete mt-1"
-                              onClick={() => handleDeleteImage(index)}
+                              onClick={() => handleDeleteImageDB(indexx)}
                             >
                               <i className="fa-solid fa-trash fa"></i>
                             </button>
