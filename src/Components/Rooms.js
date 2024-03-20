@@ -60,7 +60,7 @@ const Rooms = () => {
                   </div>
                   <div className="p-4 mt-2">
                     <div className="d-flex justify-content-between mb-3">
-                      <h5 className="mb-0">{room.title}</h5>
+                      <h5 className="mb-0">Room No: {room.title}</h5>
                       <div className="ps-2">
                         <small className="fa fa-star text-primary"></small>
                         <small className="fa fa-star text-primary"></small>

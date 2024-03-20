@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../store/store";
 
 const Booking = () => {
@@ -16,6 +16,7 @@ const Booking = () => {
     request: "",
   });
   const { user } = useAuth();
+  const Navigate=useNavigate()
 
   const fetchRoomsById = async () => {
     try {
@@ -61,6 +62,7 @@ const Booking = () => {
           roomname: "",
           request: "",
         });
+        Navigate("/rooms")
       }
     } catch (error) {}
   };
@@ -212,8 +214,9 @@ const Booking = () => {
                           name="roomname"
                           id="roomname"
                           placeholder="Room Name"
-                          value={book.roomname}
-                          onChange={handlInput}                          
+                          value={rooms.roomname}
+                          onChange={handlInput}
+                          required
                         />
                         <label for="name">{rooms.title}</label>
                       </div>
