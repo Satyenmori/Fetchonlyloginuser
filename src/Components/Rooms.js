@@ -6,9 +6,21 @@ const Rooms = () => {
 
   const fetchRooms = async () => {
     try {
-      const response = await fetch("http://localhost:5151/room/");
-      const data = await response.json();
-      setRoom(data);
+      const roomResponse = await fetch("http://localhost:5151/room/");
+      const roomData = await roomResponse.json();
+
+      const bookingResponse = await fetch("http://localhost:5151/booking/");
+      const bookingData = await bookingResponse.json();
+
+      // Compare room data with booking data to set booking status
+      const updatedRooms = roomData.map((room) => {
+        const isRoomBooked = bookingData.some(
+          (booking) => booking.roomname === room.title
+        );
+        return { ...room, isBooked: isRoomBooked };
+      });
+
+      setRoom(updatedRooms);
     } catch (error) {
       console.log(error);
     }
@@ -73,12 +85,16 @@ const Rooms = () => {
                     </div>
                     <p className="text-body mb-3">{room.description}</p>
                     <div className="d-flex justify-content-end">
-                      <Link
-                        class="btn btn-sm btn-primary rounded py-2 px-4"
-                        to={`/booking/${room._id}`}
-                      >
-                        View Detil
-                      </Link>
+                      {room.isBooked ? (
+                        <button className="btn btn-danger align-item-center">This room is Booked.</button>
+                      ) : (
+                        <Link
+                          class="btn btn-sm btn-primary rounded py-2 px-4"
+                          to={`/booking/${room._id}`}
+                        >
+                          View Detil
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>

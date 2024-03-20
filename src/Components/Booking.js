@@ -85,7 +85,7 @@ const Booking = () => {
                   rooms.images.slice(1).map((image, index) => (
                     <div key={index} className="col-6 text-end">
                       <img
-                        className="img-fluid rounded w-100 wow zoomIn"
+                        className="img-fluid rounded w-100 h-100 wow zoomIn"
                         data-wow-delay="0.1s"
                         src={`http://localhost:5151/${image}`}
                         alt={`Image ${index + 1}`}
