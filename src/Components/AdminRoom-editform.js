@@ -200,7 +200,11 @@ const RoomEditform = () => {
                               src={`http://localhost:5151/${image}`}
                               alt={`Image ${index + 1}`}
                             />
-                            <button className="delete mt-1">
+                            <button
+                            type="button"
+                              className="delete mt-1"
+                              onClick={() => handleDeleteImage(index)}
+                            >
                               <i className="fa-solid fa-trash fa"></i>
                             </button>
                           </div>
@@ -221,29 +225,29 @@ const RoomEditform = () => {
                     </div>
                   </div>
                   {/* Display selected images */}
-                <div className="col-md-12 d-flex flex-wrap">
-                  {selectedImages.map((image, index) => (
-                    <div key={index} className="position-relative">
-                      <img
-                        key={index}
-                        src={URL.createObjectURL(image)}
-                        alt={`Selected Image ${index}`}
-                        style={{
-                          width: "220px",
-                          height: "110px",
-                          margin: "5px",
-                        }}
-                      />
-                      <button
-                        type="button"
-                        className="btn btn-danger btn-sm position-absolute  end-0"
-                        onClick={() => handleDeleteImage(index)}
-                      >
-                        <i className="fa-solid fa-trash fa"></i>
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                  <div className="col-md-12 d-flex flex-wrap">
+                    {selectedImages.map((image, index) => (
+                      <div key={index} className="position-relative">
+                        <img
+                          key={index}
+                          src={URL.createObjectURL(image)}
+                          alt={`Selected Image ${index}`}
+                          style={{
+                            width: "220px",
+                            height: "110px",
+                            margin: "5px",
+                          }}
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-danger btn-sm position-absolute  end-0"
+                          onClick={() => handleDeleteImage(index)}
+                        >
+                          <i className="fa-solid fa-trash fa"></i>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                   <div className="col-12 mt-5">
                     <button
                       className="btn btn-primary w-100  py-3"

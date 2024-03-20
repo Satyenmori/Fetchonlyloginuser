@@ -43,7 +43,7 @@ const Booking = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5151/bookroom", {
+      const response = await fetch("http://localhost:5151/booking/bookroom", {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(book),
@@ -108,6 +108,7 @@ const Booking = () => {
                           placeholder="Your Name"
                           value={book.username}
                           onChange={handlInput}
+                          required
                         />
                         <label for="name">{user.username}</label>
                       </div>
@@ -122,6 +123,7 @@ const Booking = () => {
                           placeholder="Your Email"
                           value={book.email}
                           onChange={handlInput}
+                          required
                         />
                         <label for="email">{user.email}</label>
                       </div>
@@ -142,6 +144,7 @@ const Booking = () => {
                           data-toggle="datetimepicker"
                           value={book.checkin}
                           onChange={handlInput}
+                          required
                         />
                         <label for="checkin">Check In</label>
                       </div>
@@ -162,6 +165,7 @@ const Booking = () => {
                           data-toggle="datetimepicker"
                           value={book.checkout}
                           onChange={handlInput}
+                          required
                         />
                         <label for="checkout">Check Out</label>
                       </div>
@@ -174,6 +178,7 @@ const Booking = () => {
                           id="adult"
                           value={book.adult}
                           onChange={handlInput}
+                          required
                         >
                           <option value="1">Adult 1</option>
                           <option value="2">Adult 2</option>
@@ -190,6 +195,7 @@ const Booking = () => {
                           id="child"
                           value={book.child}
                           onChange={handlInput}
+                          required
                         >
                           <option value="1">Child 1</option>
                           <option value="2">Child 2</option>
@@ -207,7 +213,7 @@ const Booking = () => {
                           id="roomname"
                           placeholder="Room Name"
                           value={book.roomname}
-                          onChange={handlInput}
+                          onChange={handlInput}                          
                         />
                         <label for="name">{rooms.title}</label>
                       </div>
