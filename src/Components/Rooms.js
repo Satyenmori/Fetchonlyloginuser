@@ -11,12 +11,11 @@ const Rooms = () => {
 
       const bookingResponse = await fetch("http://localhost:5151/booking/");
       const bookingData = await bookingResponse.json();
-
       // Compare room data with booking data to set booking status
       const updatedRooms = roomData.map((room) => {
         const isRoomBooked = bookingData.some(
           (booking) => booking.roomname === room.title &&
-          new Date(booking.checkout)>new Date()
+            new Date(booking.checkout)>new Date()
         );
         return { ...room, isBooked: isRoomBooked };
       });
