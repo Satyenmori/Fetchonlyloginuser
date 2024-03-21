@@ -15,7 +15,8 @@ const Rooms = () => {
       // Compare room data with booking data to set booking status
       const updatedRooms = roomData.map((room) => {
         const isRoomBooked = bookingData.some(
-          (booking) => booking.roomname === room.title
+          (booking) => booking.roomname === room.title &&
+          new Date(booking.checkout)>new Date()
         );
         return { ...room, isBooked: isRoomBooked };
       });
