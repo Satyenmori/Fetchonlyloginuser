@@ -98,3 +98,12 @@
   height: 300px;
   width: 100%;
 }
+
+
+/* food desc scrolling; */
+
+.scroll{
+  height: 90px;
+  overflow-y: auto;
+  text-align: justify;
+}
