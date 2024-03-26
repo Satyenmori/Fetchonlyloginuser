@@ -99,11 +99,20 @@
   width: 100%;
 }
 
+.food-image{
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+}
 
 /* food desc scrolling; */
 
 .scroll{
   height: 90px;
-  overflow-y: auto;
+  overflow-y:hidden;
   text-align: justify;
+}
+
+.pointer{
+  cursor: pointer;
 }

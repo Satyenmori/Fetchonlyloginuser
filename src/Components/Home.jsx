@@ -3,9 +3,13 @@ import { useEffect, useState } from "react";
 const Home = () => {
   const [foods, setFood] = useState([]);
   const [categories, setCategories] = useState([]);
-  const fetchFood = async () => {
+  const [activeCategory, setActiveCategory] = useState([]);
+
+  const fetchFood = async (category) => {
     try {
-      const response = await fetch("http://localhost:5151/food/getfood");
+      const response = await fetch(
+        `http://localhost:5151/category/filter?category=${category}`
+      );
       const data = await response.json();
       setFood(data);
       console.log(foods);
@@ -24,9 +28,13 @@ const Home = () => {
     }
   };
   useEffect(() => {
-    fetchFood();
+    fetchFood(activeCategory);
     fetchCategory();
-  }, []);
+  }, [activeCategory]);
+
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+  };
   return (
     <>
       <div className="menu-box">
@@ -34,7 +42,7 @@ const Home = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="heading-title text-center mb-3 mt-2">
-                <h2 >Special Menu</h2>
+                <h2>Special Menu</h2>
               </div>
             </div>
           </div>
@@ -47,18 +55,21 @@ const Home = () => {
                 aria-orientation="vertical"
               >
                 <a
-                  className="nav-link active"
-                  id="v-pills-home-tab"
-                  data-toggle="pill"
-                  href="#v-pills-home"
-                  role="tab"
-                  aria-controls="v-pills-home"
-                  aria-selected="true"
+                  className={`nav-link ${
+                    activeCategory === "All" && "active"
+                  } pointer`}
+                  onClick={() => handleCategoryChange("All")}
                 >
                   All
                 </a>
                 {categories.map((category) => (
-                  <a key={category.id} className="nav-link">
+                  <a
+                    key={category._id}
+                    className={`nav-link ${
+                      activeCategory === category.label && "active"
+                    } pointer`}
+                    onClick={() => handleCategoryChange(category.label)}
+                  >
                     {category.label}
                   </a>
                 ))}
@@ -83,7 +94,7 @@ const Home = () => {
                           <div className="room-item shadow rounded overflow-hidden">
                             <div className="position-relative">
                               <img
-                                className="img-fluid room-image"
+                                className="img-fluid food-image"
                                 src={food.img}
                                 alt="thumbnail"
                               />
