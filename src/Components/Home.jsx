@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../store/store";
 
 const Home = () => {
   const [foods, setFood] = useState([]);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState([]);
+  const { isAdmin } = useAuth();
 
   const fetchFood = async (category) => {
     try {
@@ -54,16 +57,16 @@ const Home = () => {
                 role="tablist"
                 aria-orientation="vertical"
               >
-                <a
+                <div
                   className={`nav-link ${
                     activeCategory === "All" && "active"
                   } pointer`}
                   onClick={() => handleCategoryChange("All")}
                 >
                   All
-                </a>
+                </div>
                 {categories.map((category) => (
-                  <a
+                  <div
                     key={category._id}
                     className={`nav-link ${
                       activeCategory === category.label && "active"
@@ -71,7 +74,7 @@ const Home = () => {
                     onClick={() => handleCategoryChange(category.label)}
                   >
                     {category.label}
-                  </a>
+                  </div>
                 ))}
               </div>
             </div>
@@ -83,6 +86,16 @@ const Home = () => {
                   role="tabpanel"
                   aria-labelledby="v-pills-home-tab"
                 >
+                  <div className="col-md-2">
+                    {isAdmin && (
+                      <Link
+                        className="btn btn-sm btn-success rounded px-3 mb-2"
+                        to="/addfood"
+                      >
+                        <i class="fa-solid fa-plus"></i> New Food
+                      </Link>
+                    )}
+                  </div>
                   <div className="row">
                     {foods &&
                       foods.map((food) => (

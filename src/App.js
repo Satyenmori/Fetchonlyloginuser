@@ -5,6 +5,7 @@ import AdminRooms from "./Components/Admin-Rooms";
 import RoomEditform from "./Components/AdminRoom-editform";
 import Adminroomadd from "./Components/AdminRoomadd";
 import Booking from "./Components/Booking";
+import Foodadd from "./Components/FoodaddForm";
 import Home from "./Components/Home";
 import NavBar from "./Components/NavBar";
 import Rooms from "./Components/Rooms";
@@ -39,7 +40,7 @@ function App() {
               </AdminProtected>
             }
           />
-           <Route
+          <Route
             path="/admin/room-form/edit/:id"
             element={
               <AdminProtected>
@@ -47,6 +48,8 @@ function App() {
               </AdminProtected>
             }
           />
+          <Route path="/addfood" element={<Foodadd />} />
+
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
