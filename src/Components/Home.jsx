@@ -23,9 +23,11 @@ const Home = () => {
 
   const fetchCategory = async () => {
     try {
-      const response = await fetch("http://localhost:5151/category/");
+      const response = await fetch("http://localhost:5151/food/getfood");
       const data = await response.json();
-      setCategories(data);
+      //category uniuqly fetch
+      const uniqueCategory = [...new Set(data.map((item) => item.category))];
+      setCategories(uniqueCategory);
     } catch (error) {
       console.log(error);
     }
@@ -65,15 +67,15 @@ const Home = () => {
                 >
                   All
                 </div>
-                {categories.map((category) => (
+                {categories.map((category,index) => (
                   <div
-                    key={category._id}
+                    key={index}
                     className={`nav-link ${
-                      activeCategory === category.label && "active"
+                      activeCategory === category && "active"
                     } pointer`}
-                    onClick={() => handleCategoryChange(category.label)}
+                    onClick={() => handleCategoryChange(category)}
                   >
-                    {category.label}
+                    {category}
                   </div>
                 ))}
               </div>
@@ -118,8 +120,8 @@ const Home = () => {
                             <div className="p-4 mt-2">
                               <div className="d-flex justify-content-between mb-3">
                                 <h5 className="mb-0">{food.name}</h5>
-                                <div className="ps-2">
-                                  <small className="fa fa-star text-primary">
+                                <div className="ps-2 btn-success btn btn-sm">
+                                  <small className="fa fa-star text-light">
                                     {food.rating}
                                   </small>
                                 </div>
