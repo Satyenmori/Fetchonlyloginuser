@@ -1,9 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/store";
+import { useEffect, useState } from "react";
 
 const NavBar = () => {
   const { user } = useAuth();
   const { isAdmin } = useAuth();
+  const [cartCount, setCartCount] = useState(0);
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -57,6 +59,18 @@ const NavBar = () => {
               <li className="nav-item">
                 <NavLink className="btn btn-outline-warning" to="/login">
                   SignIn
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/cart"
+                >
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  {cartCount > 0 && (
+                    <span className="badge bg-danger">{cartCount}</span>
+                  )}
                 </NavLink>
               </li>
             </ul>

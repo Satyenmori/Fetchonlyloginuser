@@ -67,7 +67,7 @@ const Home = () => {
                 >
                   All
                 </div>
-                {categories.map((category,index) => (
+                {categories.map((category, index) => (
                   <div
                     key={index}
                     className={`nav-link ${
@@ -129,6 +129,13 @@ const Home = () => {
                               <p className="text-body mb-3 scroll">
                                 {food.desc}
                               </p>
+                              <div className="text-center">
+                                {" "}
+                                {/* Center align button */}
+                                <Link className="btn btn-primary btn-sm" to={`/cart/${food._id}`}>
+                                  Add to Cart
+                                </Link>
+                              </div>
                             </div>
                           </div>
                         </div>

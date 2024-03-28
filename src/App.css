@@ -116,3 +116,10 @@
 .pointer{
   cursor: pointer;
 }
+
+
+/* cart css */
+
+.spanST{
+  max-width: 34px;
+}

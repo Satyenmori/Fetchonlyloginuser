@@ -5,6 +5,7 @@ import AdminRooms from "./Components/Admin-Rooms";
 import RoomEditform from "./Components/AdminRoom-editform";
 import Adminroomadd from "./Components/AdminRoomadd";
 import Booking from "./Components/Booking";
+import Cart from "./Components/Cart";
 import Foodadd from "./Components/FoodaddForm";
 import Home from "./Components/Home";
 import NavBar from "./Components/NavBar";
@@ -49,6 +50,9 @@ function App() {
             }
           />
           <Route path="/addfood" element={<Foodadd />} />
+          <Route path="/cart/:id" element={<Cart />} />
+          <Route path="/cart" element={<Cart />} />
+
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>
