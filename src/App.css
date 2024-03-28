@@ -121,5 +121,11 @@
 /* cart css */
 
 .spanST{
-  max-width: 34px;
+  max-width:34px;
+}
+
+
+.input-group-btn {
+  width: 33.33%; 
+  text-align: center;
 }
