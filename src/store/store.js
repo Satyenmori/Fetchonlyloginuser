@@ -58,23 +58,6 @@ export const AuthProvider = ({ children }) => {
     fetchRooms();
   }, []);
 
-  // Get Food Data with Extra item fetch byId
-  const fetchFoodById = async () => {
-    try {
-      const response = await fetchData(
-        `http://localhost:5151/extraitem/${id}/extra`
-      );
-      const data = await response.json();
-      setFood(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchFoodById();
-  }, [id]);
-
   return (
     <AuthContext.Provider
       value={{ storeTokenInLS, user, token, isAdmin, rooms, fetchRooms,food }}

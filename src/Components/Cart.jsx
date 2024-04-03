@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import qs from "qs";
 
 const Cart = () => {
   const [food, setFood] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(0);
+  //const [totalPrice, setTotalPrice] = useState(0);
   const { id } = useParams();
+
+  const { extras, totalPrice } = qs.parse(window.location.search, {
+    ignoreQueryPrefix: true,
+  });
 
   // Fetch food item and its extra items
   const fetchFoodById = async () => {
@@ -15,10 +20,6 @@ const Cart = () => {
       const data = await response.json();
 
       setFood(data);
-
-      if (data) {
-        setTotalPrice(data.price);
-      }
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +64,14 @@ const Cart = () => {
                       Rating: {food.rating}
                     </td>
                     <td>$ {food.price}</td>
-                    <td>Extra item</td>
+                    <td>
+                      {extras.map((extra, index) => (
+                        <div key={index}>{extra}</div>
+                      ))}
+                      <Link className="btn-large btnSTY">
+                        Edit Extra Item
+                      </Link>
+                    </td>
                     <td>
                       <div className="input-group">
                         <span className="input-group-btn">
