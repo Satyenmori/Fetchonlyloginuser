@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -6,6 +7,8 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState("");
   const [rooms, setRoom] = useState([]);
+  const [food, setFood] = useState(null);
+  const { id } = useParams();
 
   // Jwt token StoreIn LocalStore
   const storeTokenInLS = (serverToken) => {
@@ -55,9 +58,26 @@ export const AuthProvider = ({ children }) => {
     fetchRooms();
   }, []);
 
+  // Get Food Data with Extra item fetch byId
+  const fetchFoodById = async () => {
+    try {
+      const response = await fetchData(
+        `http://localhost:5151/extraitem/${id}/extra`
+      );
+      const data = await response.json();
+      setFood(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFoodById();
+  }, [id]);
+
   return (
     <AuthContext.Provider
-      value={{ storeTokenInLS, user, token, isAdmin, rooms,fetchRooms }}
+      value={{ storeTokenInLS, user, token, isAdmin, rooms, fetchRooms,food }}
     >
       {children}
     </AuthContext.Provider>

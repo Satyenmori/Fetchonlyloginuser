@@ -6,6 +6,7 @@ import RoomEditform from "./Components/AdminRoom-editform";
 import Adminroomadd from "./Components/AdminRoomadd";
 import Booking from "./Components/Booking";
 import Cart from "./Components/Cart";
+import Extraitem from "./Components/Extaitem";
 import Foodadd from "./Components/FoodaddForm";
 import Home from "./Components/Home";
 import NavBar from "./Components/NavBar";
@@ -52,7 +53,8 @@ function App() {
           <Route path="/addfood" element={<Foodadd />} />
           <Route path="/cart/:id" element={<Cart />} />
           <Route path="/cart" element={<Cart />} />
-
+          <Route path="/extraitem" element={<Extraitem />} />
+          <Route path="/extraitem/:id" element={<Extraitem />} />
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>

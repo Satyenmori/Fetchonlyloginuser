@@ -132,7 +132,7 @@ const Home = () => {
                               <div className="text-center">
                                 {" "}
                                 {/* Center align button */}
-                                <Link className="btn btn-primary btn-sm" to={`/cart/${food._id}`}>
+                                <Link className="btn btn-primary btn-sm" to={`/extraitem/${food._id}`}>
                                   Add to Cart
                                 </Link>
                               </div>
