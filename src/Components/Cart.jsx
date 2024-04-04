@@ -64,11 +64,15 @@ const Cart = () => {
                       Rating: {food.rating}
                     </td>
                     <td>$ {food.price}</td>
+
                     <td>
-                      {extras.map((extra, index) => (
+                      {extras && extras.map((extra, index) => (
                         <div key={index}>{extra}</div>
                       ))}
-                      <Link className="btn-large btnSTY">
+                      <Link
+                        to={`/extraitem/${id}`}
+                        className="btn-large btnSTY"
+                      >
                         Edit Extra Item
                       </Link>
                     </td>
