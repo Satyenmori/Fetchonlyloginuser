@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import qs from "qs";
 
 function Extraitem() {
   const [food, setFood] = useState(null);
@@ -86,10 +85,7 @@ function Extraitem() {
                 <h3 className="">Total $ {totalPrice}</h3>
                 <Link
                   className="btn btn-success"
-                  to={`/cart/${food._id}?${qs.stringify({
-                    extras: Extra.map((extra) => extra.name),
-                    totalPrice: totalPrice,
-                  })}`}
+                  to={`/cart/${food._id}`}
                   onClick={() => addToCart(food, food.extraitem)}
                 >
                   Add To Cart

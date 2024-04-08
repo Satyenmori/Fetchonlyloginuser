@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import qs from "qs";
+
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const { id } = useParams();
-
-  const { extras, totalPrice } = qs.parse(window.location.search, {
-    ignoreQueryPrefix: true,
-  });
-
+  
   // Fetch food item and its extra items
   useEffect(() => {
     const fetchCartItems = async () => {
