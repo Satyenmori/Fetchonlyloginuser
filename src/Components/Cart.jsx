@@ -16,6 +16,7 @@ const Cart = () => {
       try {
         const response = await fetch("http://localhost:5151/cart");
         const data = await response.json();
+        console.log(data);
         setCartItems(data);
       } catch (error) {
         console.log("Error fetching cart items:", error);
@@ -23,13 +24,14 @@ const Cart = () => {
     };
     fetchCartItems();
   }, []);
+  console.log("State Data", cartItems);
 
   const handleDeleteItem = async (itemId) => {
     try {
       await fetch(`http://localhost:5151/cart/deletecart/${itemId}`, {
         method: "DELETE",
       });
-      alert("Item Successfuly Deleted")
+      alert("Item Successfuly Deleted");
       setCartItems(cartItems.filter((item) => item._id !== itemId));
     } catch (error) {
       console.log("Error deleting item from cart:", error);
@@ -62,24 +64,31 @@ const Cart = () => {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>
-                      <img width="100" src={item.img} alt={item.name} />
+                      <img
+                        width="100"
+                        src={item.food.img}
+                        alt={item.food.name}
+                      />
                     </td>
                     <td>
-                      {item.name}
+                      {item.food.name}
                       <br />
-                      Category: {item.category}
+                      Category: {item.food.category}
                       <br />
-                      Rating: {item.rating}
+                      Rating: {item.food.rating}{" "}
+                      <small className="fa fa-star text-primary"></small>
                     </td>
-                    <td>$ {item.price}</td>
+                    <td>$ {item.food.price}</td>
                     {/* Render extras for each item */}
                     <td>
-                      {extras &&
-                        extras.map((extra, index) => (
-                          <div key={index}>{extra}</div>
-                        ))}
+                      {item.extras.map((extra, index) => (
+                        <div key={index}>
+                          {extra.name} - $ {extra.price}
+                        </div>
+                      ))}
+
                       <Link
-                        to={`/extraitem/${item._id}`}
+                        to={`/extraitem/${item.food._id}`}
                         className="btn-large btnSTY"
                       >
                         Edit Extra Item
@@ -106,7 +115,7 @@ const Cart = () => {
                         </span>
                       </div>
                     </td>
-                    <td>$ {item.price}</td>
+                    <td>$ {item.food.price}</td>
                     <td
                       className="delete"
                       onClick={() => handleDeleteItem(item._id)}

@@ -43,7 +43,20 @@ function Extraitem() {
       setExtra([...Extra, extra]);
     }
   };
-
+  const addToCart = async (food, extras) => {
+    try {
+      const response = await fetch("http://localhost:5151/cart/addtocart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ food, extras }),
+      });
+      const data = await response.json();
+      alert("Data Successfully addToCart");
+      console.log(data);
+    } catch (error) {
+      console.log("Error adding cart", error);
+    }
+  };
   return (
     <>
       {food && (
@@ -77,6 +90,7 @@ function Extraitem() {
                     extras: Extra.map((extra) => extra.name),
                     totalPrice: totalPrice,
                   })}`}
+                  onClick={() => addToCart(food, food.extraitem)}
                 >
                   Add To Cart
                 </Link>
