@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  
+
   // Fetch food item and its extra items
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -33,6 +32,24 @@ const Cart = () => {
     }
   };
 
+  // Handle Qty and Total price
+  const handleQuantityChange = (itemId, newQuantity) => {
+    // not less then 1 value set
+    newQuantity = Math.max(1, newQuantity);
+
+    const updatedCartItems = cartItems.map((item) =>
+      item._id === itemId ? { ...item, quantity: newQuantity } : item
+    );
+    setCartItems(updatedCartItems);
+  };
+
+  const calculateTotalPrice = (item) => {
+    let totalPrice = item.food.price;
+    item.extras.forEach((extra) => {
+      totalPrice += extra.price;
+    });
+    return totalPrice * item.quantity;
+  };
   return (
     <>
       <div className="container w-75 mt-5">
@@ -92,7 +109,13 @@ const Cart = () => {
                     <td>
                       <div className="input-group">
                         <span className="input-group-btn">
-                          <button className="btn btn-danger" type="button">
+                          <button
+                            className="btn btn-danger"
+                            type="button"
+                            onClick={() =>
+                              handleQuantityChange(item._id, item.quantity - 1)
+                            }
+                          >
                             -
                           </button>
                         </span>
@@ -100,17 +123,23 @@ const Cart = () => {
                           className="form-control text-center spanST"
                           placeholder="1"
                           type="text"
-                          value="1"
+                          value={item.quantity}
                           readOnly
                         />
                         <span className="input-group-btn">
-                          <button className="btn btn-success" type="button">
+                          <button
+                            className="btn btn-success"
+                            type="button"
+                            onClick={() =>
+                              handleQuantityChange(item._id, item.quantity + 1)
+                            }
+                          >
                             +
                           </button>
                         </span>
                       </div>
                     </td>
-                    <td>$ {item.food.price}</td>
+                    <td>$ {calculateTotalPrice(item)}</td>
                     <td
                       className="delete"
                       onClick={() => handleDeleteItem(item._id)}
