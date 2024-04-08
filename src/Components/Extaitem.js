@@ -43,12 +43,12 @@ function Extraitem() {
       setExtra([...Extra, extra]);
     }
   };
-  const addToCart = async (food, extras) => {
+  const addToCart = async () => {
     try {
       const response = await fetch("http://localhost:5151/cart/addtocart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ food, extras }),
+        body: JSON.stringify({ food, extras:Extra }),
       });
       const data = await response.json();
       alert("Data Successfully addToCart");
