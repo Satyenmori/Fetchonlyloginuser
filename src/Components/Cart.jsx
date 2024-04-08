@@ -3,8 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import qs from "qs";
 
 const Cart = () => {
-  const [food, setFood] = useState(null);
-  //const [totalPrice, setTotalPrice] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
   const { id } = useParams();
 
   const { extras, totalPrice } = qs.parse(window.location.search, {
@@ -12,65 +11,75 @@ const Cart = () => {
   });
 
   // Fetch food item and its extra items
-  const fetchFoodById = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:5151/extraitem/${id}/extra`
-      );
-      const data = await response.json();
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const response = await fetch("http://localhost:5151/cart");
+        const data = await response.json();
+        setCartItems(data);
+      } catch (error) {
+        console.log("Error fetching cart items:", error);
+      }
+    };
+    fetchCartItems();
+  }, []);
 
-      setFood(data);
+  const handleDeleteItem = async (itemId) => {
+    try {
+      await fetch(`http://localhost:5151/cart/deletecart/${itemId}`, {
+        method: "DELETE",
+      });
+      alert("Item Successfuly Deleted")
+      setCartItems(cartItems.filter((item) => item._id !== itemId));
     } catch (error) {
-      console.log(error);
+      console.log("Error deleting item from cart:", error);
     }
   };
 
-  useEffect(() => {
-    fetchFoodById();
-  }, [id]);
-
   return (
     <>
-      {food && (
-        <div className="container w-75 mt-5">
-          <div className="span12">
-            <div className="well well-small">
-              <h1>Cart</h1>
-              <hr className="soften" />
+      <div className="container w-75 mt-5">
+        <div className="span12">
+          <div className="well well-small">
+            <h1>Cart</h1>
+            <hr className="soften" />
 
-              <table className="table table-bordered table-condensed mt-4">
-                <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>Food Item</th>
-                    <th>Description</th>
-                    <th>Unit price</th>
-                    <th>Extras</th>
-                    <th>Qty</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
+            <table className="table table-bordered table-condensed mt-4">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Food Item</th>
+                  <th>Description</th>
+                  <th>Unit price</th>
+                  <th>Extras</th>
+                  <th>Qty</th>
+                  <th>Total</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cartItems.map((item, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
                     <td>
-                      <img width="100" src={food.img} alt={food.name} />
+                      <img width="100" src={item.img} alt={item.name} />
                     </td>
                     <td>
-                      {food.name}
+                      {item.name}
                       <br />
-                      Category: {food.category}
+                      Category: {item.category}
                       <br />
-                      Rating: {food.rating}
+                      Rating: {item.rating}
                     </td>
-                    <td>$ {food.price}</td>
-
+                    <td>$ {item.price}</td>
+                    {/* Render extras for each item */}
                     <td>
-                      {extras && extras.map((extra, index) => (
-                        <div key={index}>{extra}</div>
-                      ))}
+                      {extras &&
+                        extras.map((extra, index) => (
+                          <div key={index}>{extra}</div>
+                        ))}
                       <Link
-                        to={`/extraitem/${id}`}
+                        to={`/extraitem/${item._id}`}
                         className="btn-large btnSTY"
                       >
                         Edit Extra Item
@@ -97,23 +106,34 @@ const Cart = () => {
                         </span>
                       </div>
                     </td>
-                    <td>$ {totalPrice}</td>
+                    <td>$ {item.price}</td>
+                    <td
+                      className="delete"
+                      onClick={() => handleDeleteItem(item._id)}
+                    >
+                      {
+                        <i
+                          class="fa-solid fa-trash"
+                          style={{ color: "red" }}
+                        ></i>
+                      }
+                    </td>
                   </tr>
-                </tbody>
-              </table>
+                ))}
+              </tbody>
+            </table>
 
-              <div className="justify-between">
-                <Link to="/" className="btn btn-dark btn-large">
-                  <span className="icon-arrow-left"></span> Continue Shopping
-                </Link>
-                <button className="btn btn-primary btn-large btnSTY">
-                  Order Now <span className="icon-arrow-right"></span>
-                </button>
-              </div>
+            <div className="justify-between">
+              <Link to="/" className="btn btn-dark btn-large">
+                <span className="icon-arrow-left"></span> Continue Shopping
+              </Link>
+              <button className="btn btn-primary btn-large btnSTY">
+                Order Now <span className="icon-arrow-right"></span>
+              </button>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };

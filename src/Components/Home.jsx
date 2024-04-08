@@ -40,6 +40,22 @@ const Home = () => {
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
   };
+
+  const addToCart = async (food) => {
+    try {
+      const response = await fetch("http://localhost:5151/cart/addtocart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ food }),
+      });
+      const data = await response.json();
+      alert("Data Successfully addToCart");
+      console.log(data);
+    } catch (error) {
+      console.log("Error adding cart", error);
+    }
+  };
+
   return (
     <>
       <div className="menu-box">
@@ -132,7 +148,11 @@ const Home = () => {
                               <div className="text-center">
                                 {" "}
                                 {/* Center align button */}
-                                <Link className="btn btn-primary btn-sm" to={`/extraitem/${food._id}`}>
+                                <Link
+                                  className="btn btn-primary btn-sm"
+                                  to={`/extraitem/${food._id}`}
+                                  onClick={() => addToCart(food)}
+                                >
                                   Add to Cart
                                 </Link>
                               </div>

@@ -9,7 +9,10 @@
   margin-right: 15px;
 }
 .delete {
-  background-color: red;
+  color: red;
+  text-align: center;
+  font-size: larger;
+  cursor: pointer;
 }
 .username {
   font-size: 45px;
@@ -99,7 +102,7 @@
   width: 100%;
 }
 
-.food-image{
+.food-image {
   height: 200px;
   width: 100%;
   overflow: hidden;
@@ -107,26 +110,24 @@
 
 /* food desc scrolling; */
 
-.scroll{
+.scroll {
   height: 90px;
-  overflow-y:hidden;
+  overflow-y: hidden;
   text-align: justify;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
-
 /* cart css */
 
-.spanST{
-  max-width:34px;
+.spanST {
+  max-width: 34px;
 }
 
-
 .input-group-btn {
-  width: 33.33%; 
+  width: 33.33%;
   text-align: center;
 }
 
