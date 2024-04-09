@@ -121,7 +121,7 @@ const Cart = () => {
                       ))}
 
                       <Link
-                        to={`/extraitem/${item.food._id}`}
+                        to={`/update/${item.food._id}`}
                         className="btn-large btnSTY"
                       >
                         Edit Extra Item

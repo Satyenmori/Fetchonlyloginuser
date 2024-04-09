@@ -14,6 +14,7 @@ import Rooms from "./Components/Rooms";
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Updateitem from "./Components/Update-ExtraItem";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/extraitem" element={<Extraitem />} />
           <Route path="/extraitem/:id" element={<Extraitem />} />
+          <Route path="/update/:id" element={<Updateitem />} />
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>
