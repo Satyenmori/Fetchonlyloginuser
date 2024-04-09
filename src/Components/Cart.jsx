@@ -50,6 +50,27 @@ const Cart = () => {
     });
     return totalPrice * item.quantity;
   };
+
+  // Calculate grand total
+  const grandTotal = cartItems.reduce(
+    (total, item) => total + calculateTotalPrice(item),
+    0
+  );
+
+  const placeOrder = async () => {
+    try {
+      const response = await fetch("http://localhost:5151/order/addorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+      const data = await response.json();
+      console.log(data);
+      alert("Order placed successfully!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="container w-75 mt-5">
@@ -153,6 +174,15 @@ const Cart = () => {
                     </td>
                   </tr>
                 ))}
+                <tr>
+                  <td colSpan="5"></td>
+                  <td>
+                    <strong>Grand Total:</strong>
+                  </td>
+                  <td>
+                    <strong>$ {grandTotal}</strong>
+                  </td>
+                </tr>
               </tbody>
             </table>
 
@@ -160,7 +190,10 @@ const Cart = () => {
               <Link to="/" className="btn btn-dark btn-large">
                 <span className="icon-arrow-left"></span> Continue Shopping
               </Link>
-              <button className="btn btn-primary btn-large btnSTY">
+              <button
+                className="btn btn-primary btn-large btnSTY"
+                onClick={placeOrder}
+              >
                 Order Now <span className="icon-arrow-right"></span>
               </button>
             </div>
