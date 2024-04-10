@@ -24,13 +24,32 @@ const Updateitem = () => {
   }, [id]);
 
   // Function to handle checkbox toggle
-  const handleCheckboxChange = (extraId) => {
+  const handleCheckboxChange = async (extraId) => {
     // If extraId exists in selectedExtras, remove it; otherwise, add it
-    setSelectedExtras((prevSelectedExtras) =>
-      prevSelectedExtras.includes(extraId)
-        ? prevSelectedExtras.filter((id) => id !== extraId)
-        : [...prevSelectedExtras, extraId]
-    );
+    const newSelectedExtras = selectedExtras.includes(extraId)
+      ? selectedExtras.filter((id) => id !== extraId)
+      : [...selectedExtras, extraId];
+    setSelectedExtras(newSelectedExtras);
+    await updateCart(newSelectedExtras);
+  };
+
+  const updateCart = async (newSelectedExtras) => {
+    try {
+      const response = await fetch(`http://localhost:5151/cart/updatecart/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ extras: newSelectedExtras }),
+      });
+      if (response.ok) {
+        console.log("Cart updated successfully");
+      } else {
+        console.log("Failed to update cart");
+      }
+    } catch (error) {
+      console.log("Error updating cart:", error);
+    }
   };
 
   return (
