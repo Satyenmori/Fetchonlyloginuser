@@ -15,6 +15,9 @@ import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Updateitem from "./Components/Update-ExtraItem";
+import TestDataadd from "./Components/Test-add";
+import Testedit from "./Components/Test-Edit";
+import Test from "./Components/Test";
 
 function App() {
   return (
@@ -26,6 +29,7 @@ function App() {
           <Route path="/login" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/rooms" element={<Rooms />} />
+          <Route path="/test" element={<Test />} />
           <Route path="/booking/:id" element={<Booking />} />
           <Route
             path="/roomadd"
@@ -57,7 +61,8 @@ function App() {
           <Route path="/extraitem" element={<Extraitem />} />
           <Route path="/extraitem/:id" element={<Extraitem />} />
           <Route path="/update/:id" element={<Updateitem />} />
-
+          <Route path="/addtest" element={<TestDataadd />} />
+          <Route path="/test/update/:id" element={<Testedit />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

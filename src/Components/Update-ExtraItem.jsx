@@ -3,45 +3,55 @@ import { Link, useParams } from "react-router-dom";
 
 const Updateitem = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [selectedExtras, setSelectedExtras] = useState([]);
+  const [selectedExtras, setSelectedExtras] = useState(new Set()); // Use Set to store selected extra item IDs
+
   const { id } = useParams();
 
-  // Fetch food item and its extra items
   const fetchCartById = async () => {
     try {
-      const response = await fetch(`http://localhost:5151/cart/${id}`);
+      const response = await fetch(
+        `http://localhost:5151/extraitem/${id}/extra`
+      );
       const data = await response.json();
-      setCartItems(data.extras);
-      // Initialize selectedExtras state with extras from cartItems
-      const initialSelectedExtras = data.extras.map((extra) => extra._id);
-      setSelectedExtras(initialSelectedExtras);
+      setCartItems(data.extraitem);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetchCartById();
   }, [id]);
 
+  useEffect(() => {
+    // Update selectedExtras when cartItems change
+    const selectedExtraIds = new Set(cartItems.map((extra) => extra._id));
+    setSelectedExtras(selectedExtraIds);
+  }, [cartItems]);
+
   // Function to handle checkbox toggle
-  const handleCheckboxChange = async (extraId) => {
-    // If extraId exists in selectedExtras, remove it; otherwise, add it
-    const newSelectedExtras = selectedExtras.includes(extraId)
-      ? selectedExtras.filter((id) => id !== extraId)
-      : [...selectedExtras, extraId];
+  const handleCheckboxChange = (extraId) => {
+    const newSelectedExtras = new Set(selectedExtras);
+    if (newSelectedExtras.has(extraId)) {
+      newSelectedExtras.delete(extraId);
+    } else {
+      newSelectedExtras.add(extraId);
+    }
     setSelectedExtras(newSelectedExtras);
-    await updateCart(newSelectedExtras);
   };
 
-  const updateCart = async (newSelectedExtras) => {
+  const updateCart = async () => {
     try {
-      const response = await fetch(`http://localhost:5151/cart/updatecart/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ extras: newSelectedExtras }),
-      });
+      const response = await fetch(
+        `http://localhost:5151/cart/updatecart/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ extras: Array.from(selectedExtras) }), // Convert Set to Array
+        }
+      );
       if (response.ok) {
         console.log("Cart updated successfully");
       } else {
@@ -67,15 +77,21 @@ const Updateitem = () => {
                   <span className="extra-price">+ $ {extra.price}</span>
                   <input
                     type="checkbox"
-                    checked={selectedExtras.includes(extra._id)}
                     onChange={() => handleCheckboxChange(extra._id)}
+                    checked={
+                      selectedExtras.has(extra._id) ||
+                      cartItems.find((item) => item._id === extra._id)
+                    } // Check if the extra is selected or already in the cart
                   />
                 </div>
               </li>
             ))}
             <li className="list-group-item mt-3 d-flex justify-content-center">
-              <Link className="btn btn-success" to={`/cart/`}>
+              <button className="btn btn-success" onClick={updateCart}>
                 Update Cart
+              </button>
+              <Link className="btn btn-primary ml-2" to={`/cart/`}>
+                Back to Cart
               </Link>
             </li>
           </ul>

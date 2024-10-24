@@ -52,6 +52,15 @@ const NavBar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
+                <NavLink
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/test"
+                >
+                  Test Data
+                </NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink className="btn btn-outline-success" to="/signup">
                   SignUp
                 </NavLink>

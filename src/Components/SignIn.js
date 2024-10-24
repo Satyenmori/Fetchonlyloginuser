@@ -31,7 +31,7 @@ const SignIn = () => {
         storeTokenInLS(res_data.token)
         Navigate("/");
       }else{
-        alert("Wrong Incridible")
+        alert("Wrong Credintails")
       }
     } catch (error) {
       console.log(error);

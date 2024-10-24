@@ -51,6 +51,8 @@ const RoomEditform = () => {
       console.error("Error deleting image from the server", error);
     }
   };
+
+  
   const handleInput = (e) => {
     const { name, value, file } = e.target;
 
